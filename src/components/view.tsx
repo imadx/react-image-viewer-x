@@ -183,11 +183,7 @@ export const View: FC<ViewProps> = ({ src, state }) => {
 			animationRef.current.x = initialAnimationX + x - initialX;
 			animationRef.current.y = initialAnimationY + y - initialY;
 
-			if (rAFRef.current) cancelAnimationFrame(rAFRef.current);
-
-			rAFRef.current = requestAnimationFrame(() => {
-				drawCanvasImageWithOffsets();
-			});
+			drawCanvasImageWithOffsets();
 		};
 
 		const onMouseUp = () => {
@@ -236,6 +232,12 @@ export const View: FC<ViewProps> = ({ src, state }) => {
 				if (Math.abs(offsetYToMove) > 0) {
 					finalOffsetY = canvasRef.current.height / 2;
 				}
+			}
+
+			if (rAFRef.current) cancelAnimationFrame(rAFRef.current);
+
+			if (animeRef.current?.progress !== 100) {
+				animeRef.current = null;
 			}
 
 			animeRef.current = anime({
