@@ -1,4 +1,5 @@
 import type { FC, ReactNode } from "react";
+import classes from "./control-button.module.scss";
 
 interface ControlButtonProps {
 	children: ReactNode;
@@ -10,7 +11,7 @@ export const ControlButton: FC<ControlButtonProps> = ({
 	onClick,
 }) => {
 	return (
-		<button type="button" onClick={onClick} className="text-white p-2">
+		<button type="button" onClick={onClick} className={classes.button}>
 			{children}
 		</button>
 	);

@@ -2,8 +2,8 @@ import { type FC, useState } from "react";
 import type { Configuration } from "../types";
 import { BackdropProps } from "./backdrop.tsx";
 import { Controls } from "./controls.tsx";
+import classes from "./image-viewer.module.scss";
 import { View } from "./view.tsx";
-import "./index.css";
 
 interface ViewerProps {
 	src: string;
@@ -31,16 +31,10 @@ export const ImageViewer: FC<ViewerProps> = ({
 	alt,
 	configuration: userConfiguration,
 }) => {
-	const configuration = {
-		viewer: {
-			...defaultConfiguration.viewer,
-			...userConfiguration?.viewer,
-		},
-		controllers: {
-			...defaultConfiguration.controllers,
-			...userConfiguration?.controllers,
-		},
-	};
+	const configuration = getMergedConfiguration(
+		defaultConfiguration,
+		userConfiguration,
+	);
 	const [scale, setScale] = useState(1);
 
 	const handleZoomIn = () => {
@@ -62,7 +56,7 @@ export const ImageViewer: FC<ViewerProps> = ({
 	const state = { scale };
 
 	return (
-		<div className="w-[800px] h-[450px] relative overflow-hidden">
+		<div className={classes.imageViewerContainer}>
 			<BackdropProps src={src} />
 			<Controls
 				onZoomIn={handleZoomIn}
@@ -72,4 +66,24 @@ export const ImageViewer: FC<ViewerProps> = ({
 			<View src={src} alt={alt} state={state} />
 		</div>
 	);
+};
+
+const getMergedConfiguration = (
+	defaultConfiguration: Configuration,
+	userConfiguration: Partial<Configuration> | undefined,
+): Configuration => {
+	return {
+		viewer: {
+			...defaultConfiguration.viewer,
+			...userConfiguration?.viewer,
+		},
+		controllers: {
+			...defaultConfiguration.controllers,
+			...userConfiguration?.controllers,
+		},
+		options: {
+			...defaultConfiguration.options,
+			...userConfiguration?.options,
+		},
+	};
 };

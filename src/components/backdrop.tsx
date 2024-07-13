@@ -1,5 +1,5 @@
-import clsx from "clsx";
 import type { FC } from "react";
+import classes from "./backdrop.module.scss";
 
 interface BackdropProps {
 	src: string;
@@ -8,12 +8,7 @@ interface BackdropProps {
 export const BackdropProps: FC<BackdropProps> = ({ src }) => {
 	return (
 		<div
-			className={clsx(
-				"absolute inset-0 z-0",
-				"bg-gray-700 bg-opacity-50",
-				"blur-xl",
-				"scale-125",
-			)}
+			className={classes.backdrop}
 			style={{
 				backgroundImage: `url(${src})`,
 				backgroundSize: "cover",

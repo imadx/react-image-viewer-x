@@ -1,7 +1,7 @@
-import clsx from "clsx";
 import type { FC } from "react";
 import type { Configuration } from "../types";
 import { ControlButton } from "./control-button.tsx";
+import classes from "./controls.module.scss";
 import { ZoomInIcon } from "./icons/zoom-in.tsx";
 import { ZoomOutIcon } from "./icons/zoom-out.tsx";
 
@@ -20,13 +20,7 @@ export const Controls: FC<ControlsProps> = ({
 	const zoomOutIconNode = configuration.zoomOutIcon ?? <ZoomOutIcon />;
 
 	return (
-		<div
-			className={clsx(
-				"flex flex-col absolute z-10 p-2 rounded-xl border border-gray-600/30 border-gray-200 fill-white",
-				"bottom-0 right-0 mr-4 mb-4",
-				"backdrop-blur-md backdrop-filter",
-			)}
-		>
+		<div className={classes.controlsContainer}>
 			{configuration.hasZoomIn && (
 				<ControlButton onClick={onZoomIn}>{zoomIconNode}</ControlButton>
 			)}

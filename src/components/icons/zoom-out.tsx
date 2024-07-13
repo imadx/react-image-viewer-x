@@ -10,7 +10,6 @@ export const ZoomOutIcon = () => {
 			strokeWidth="2"
 			strokeLinecap="round"
 			strokeLinejoin="round"
-			className="feather feather-zoom-out"
 		>
 			<title>Zoom Out</title>
 			<circle cx="11" cy="11" r="8" />

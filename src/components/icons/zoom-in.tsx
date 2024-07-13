@@ -10,7 +10,6 @@ export const ZoomInIcon = () => {
 			strokeWidth="2"
 			strokeLinecap="round"
 			strokeLinejoin="round"
-			className="feather feather-zoom-in"
 		>
 			<title>Zoom In</title>
 			<circle cx="11" cy="11" r="8" />
