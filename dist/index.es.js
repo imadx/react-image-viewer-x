@@ -1,3 +1,4 @@
+import "./style.css";
 import ke, { useState as vr } from "react";
 var Q = { exports: {} }, W = {};
 /**
@@ -726,7 +727,7 @@ const hr = "-ftnbW_backdrop", yr = {
   options: {
     hasNoBackdrop: !0
   }
-}, Fr = ({
+}, Ar = ({
   src: d,
   alt: u,
   configuration: g
@@ -766,5 +767,5 @@ const hr = "-ftnbW_backdrop", yr = {
   }
 });
 export {
-  Fr as ImageViewer
+  Ar as ImageViewer
 };

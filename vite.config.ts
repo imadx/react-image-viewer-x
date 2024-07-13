@@ -10,6 +10,7 @@ export default defineConfig({
 	},
 	build: {
 		lib: {
+			formats: ["es"],
 			entry: path.resolve(__dirname, "src/index.ts"),
 			name: "React Image Viewer",
 			fileName: (format) => `index.${format}.js`,
@@ -20,6 +21,7 @@ export default defineConfig({
 				globals: {
 					react: "React",
 				},
+				intro: 'import "./style.css"',
 			},
 		},
 	},
