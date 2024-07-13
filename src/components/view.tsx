@@ -1,5 +1,5 @@
-import anime from "animejs";
-import { type FC, useEffect, useRef, useState } from "react";
+import anime, { type AnimeInstance } from "animejs";
+import { type FC, useCallback, useEffect, useRef } from "react";
 import classes from "./view.module.scss";
 
 interface State {
@@ -8,7 +8,6 @@ interface State {
 
 interface ViewProps {
 	src: string;
-	alt: string;
 	state: State;
 }
 
@@ -17,24 +16,44 @@ interface Dimensions {
 	height: number;
 }
 
-export const View: FC<ViewProps> = ({ src, alt, state }) => {
-	// detect original image aspect ratio
+interface Position {
+	x: number;
+	y: number;
+}
+
+export const View: FC<ViewProps> = ({ src, state }) => {
+	const canvasRef = useRef<HTMLCanvasElement>(null);
 	const containerRef = useRef<HTMLDivElement>(null);
-	const imageWrapperRef = useRef<HTMLDivElement>(null);
-	const imageRef = useRef<HTMLImageElement>(null);
+	const imageRef = useRef<HTMLImageElement | null>(null);
 
 	const containerDimensionsRef = useRef<Dimensions>({
 		width: 800,
 		height: 450,
 	});
-	const imageDimensionsRef = useRef<Dimensions>({ width: 800, height: 450 });
-
-	const scrollPositionRef = useRef({ x: 0, y: 0 });
-	const aspectRatioRef = useRef(16 / 9);
-	const [imageDimensions, setImageDimensions] = useState<Dimensions>({
+	const imageOriginalDimensionsRef = useRef<Dimensions>({
 		width: 800,
 		height: 450,
 	});
+	const imageDimensionsRef = useRef<Dimensions>({ width: 800, height: 450 });
+
+	const aspectRatioRef = useRef(16 / 9);
+
+	const animeRef = useRef<AnimeInstance | null>(null);
+	const rAFRef = useRef<number | null>(null);
+	const animationRef = useRef<Position & { scale: number }>({
+		x: 0,
+		y: 0,
+		scale: 1,
+	});
+
+	useEffect(() => {
+		const image = new Image();
+		image.onload = () => {
+			imageRef.current = image;
+		};
+
+		image.src = src;
+	}, [src]);
 
 	useEffect(() => {
 		if (!containerRef.current) return;
@@ -43,112 +62,115 @@ export const View: FC<ViewProps> = ({ src, alt, state }) => {
 			width: containerRef.current.offsetWidth,
 			height: containerRef.current.offsetHeight,
 		};
+
+		if (!canvasRef.current) return;
+		canvasRef.current.width = containerDimensionsRef.current.width;
+		canvasRef.current.height = containerDimensionsRef.current.height;
 	}, []);
 
-	useEffect(() => {
-		const handleScroll = () => {
-			if (!containerRef.current) return;
+	const drawCanvasImageWithOffsets = useCallback(() => {
+		if (!imageRef.current) return;
 
-			scrollPositionRef.current = {
-				x: containerRef.current.scrollLeft,
-				y: containerRef.current.scrollTop,
-			};
-		};
+		const canvas = canvasRef.current;
+		if (!canvas) return;
 
-		if (!containerRef.current) return;
-		containerRef.current.addEventListener("scroll", handleScroll);
+		const ctx = canvas.getContext("2d");
+		if (!ctx) return;
 
-		return () => {
-			if (!containerRef.current) return;
-			containerRef.current.removeEventListener("scroll", handleScroll);
-		};
+		// ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+		const { width, height } = imageDimensionsRef.current;
+
+		if (!animationRef.current) return;
+		console.log("=>(view.tsx:83) animationRef", animationRef);
+
+		const scale = animationRef.current.scale;
+		const scaledWidth = width * scale;
+		const scaledHeight = height * scale;
+
+		const offsetX = animationRef.current.x - scaledWidth / 2;
+		const offsetY = animationRef.current.y - scaledHeight / 2;
+
+		ctx.clearRect(0, 0, canvas.width, canvas.height);
+		ctx.drawImage(
+			imageRef.current,
+			offsetX,
+			offsetY,
+			scaledWidth,
+			scaledHeight,
+		);
 	}, []);
 
 	useEffect(() => {
 		getMeta(src)
 			.then(({ width, height }) => {
-				imageDimensionsRef.current = { width, height };
+				imageOriginalDimensionsRef.current = { width, height };
 			})
 			.then(() => {
 				aspectRatioRef.current =
-					imageDimensionsRef.current.width / imageDimensionsRef.current.height;
+					imageOriginalDimensionsRef.current.width /
+					imageOriginalDimensionsRef.current.height;
 
 				const dimensions = getImageDimensionsToFit(
 					containerDimensionsRef.current,
-					imageDimensionsRef.current,
+					imageOriginalDimensionsRef.current,
 				);
-				setImageDimensions(dimensions);
+				console.log("=>(view.tsx:55) dimensions", dimensions);
+				imageDimensionsRef.current = dimensions;
+
+				if (!canvasRef.current) return;
+
+				animationRef.current = {
+					x: canvasRef.current.width / 2,
+					y: canvasRef.current.height / 2,
+					scale: 1,
+				};
+
+				drawCanvasImageWithOffsets();
 			});
-	}, [src]);
+	}, [src, drawCanvasImageWithOffsets]);
+
+	const animateFrames = useCallback(
+		(animation: AnimeInstance) => {
+			if (animeRef.current?.progress === 100) {
+				return;
+			}
+
+			drawCanvasImageWithOffsets();
+
+			rAFRef.current = requestAnimationFrame(() => {
+				animateFrames(animation);
+			});
+		},
+		[drawCanvasImageWithOffsets],
+	);
 
 	useEffect(() => {
-		// update the scroll position when scale changes, so that the center always remains in the same position
-		if (!containerRef.current) return;
+		if (!state) return;
 
-		const scale = state.scale;
-		const imageX = imageDimensions.width * scale;
-		const imageY = imageDimensions.height * scale;
+		if (rAFRef.current) {
+			cancelAnimationFrame(rAFRef.current);
+		}
 
-		const containerX = containerDimensionsRef.current.width;
-		const containerY = containerDimensionsRef.current.height;
+		if (!animeRef.current?.complete) {
+			animeRef.current?.pause();
+		}
 
-		const scrollX = Math.max(0, (imageX - containerX) / 2);
-		const scrollY = Math.max(0, (imageY - containerY) / 2);
-
-		anime({
-			targets: containerRef.current,
-			scrollLeft: scrollX,
-			scrollTop: scrollY,
-			duration: 300,
-			easing: "cubicBezier(.3, 0, 0, 1)",
+		animeRef.current = anime({
+			targets: animationRef.current,
+			scale: state.scale,
+			duration: 500,
+			easing: "easeOutExpo",
+			autoplay: true,
+			update: (animation) => {
+				animateFrames(animation);
+			},
 		});
-
-		anime({
-			targets: imageWrapperRef.current,
-			padding: `${paddingY}px ${paddingX}px`,
-			duration: 300,
-			easing: "cubicBezier(.3, 0, 0, 1)",
-		});
-
-		anime({
-			targets: imageRef.current,
-			width: `${state.scale * imageDimensions.width}px`,
-			height: `${state.scale * imageDimensions.height}px`,
-			duration: 300,
-			easing: "cubicBezier(.3, 0, 0, 1)",
-		});
-	}, [state.scale, imageDimensions]);
-
-	const paddingX = Math.max(
-		0,
-		(containerDimensionsRef.current.width -
-			imageDimensions.width * state.scale) /
-			2,
-	);
-
-	const paddingY = Math.max(
-		0,
-		(containerDimensionsRef.current.height -
-			imageDimensions.height * state.scale) /
-			2,
-	);
+	}, [state, animateFrames]);
 
 	return (
 		<div ref={containerRef} className={classes.container}>
-			<div ref={imageWrapperRef} className={classes.imageWrapper}>
-				<img
-					ref={imageRef}
-					alt={alt ?? "Image Preview"}
-					src={src}
-					className={classes.image}
-					style={
-						{
-							// width: `${state.scale * imageDimensions.width}px`,
-							// height: `${state.scale * imageDimensions.height}px`,
-						}
-					}
-				/>
-			</div>
+			<canvas ref={canvasRef} className={classes.image} />
 		</div>
 	);
 };
