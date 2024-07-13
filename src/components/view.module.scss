@@ -15,6 +15,10 @@
   }
 }
 
+.imageWrapper {
+  transition: all .3s;
+}
+
 .image {
   position: absolute;
   box-sizing: border-box;

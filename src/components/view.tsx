@@ -58,22 +58,38 @@ export const View: FC<ViewProps> = ({ src, alt, state }) => {
 			});
 	}, [src]);
 
-	const paddingX =
-		(containerDimensionsRef.current.width - imageDimensions.width) / 2;
+	const paddingX = Math.max(
+		0,
+		(containerDimensionsRef.current.width -
+			imageDimensions.width * state.scale) /
+			2,
+	);
+
+	const paddingY = Math.max(
+		0,
+		(containerDimensionsRef.current.height -
+			imageDimensions.height * state.scale) /
+			2,
+	);
 
 	return (
 		<div ref={containerRef} className={classes.container}>
-			<img
-				alt={alt ?? "Image Preview"}
-				src={src}
-				className={classes.image}
+			<div
+				className={classes.imageWrapper}
 				style={{
-					width: `${state.scale * imageDimensions.width}px`,
-					height: `${state.scale * imageDimensions.height}px`,
-					marginLeft: `${paddingX}px`,
-					marginRight: `${paddingX}px`,
+					padding: `${paddingY}px ${paddingX}px`,
 				}}
-			/>
+			>
+				<img
+					alt={alt ?? "Image Preview"}
+					src={src}
+					className={classes.image}
+					style={{
+						width: `${state.scale * imageDimensions.width}px`,
+						height: `${state.scale * imageDimensions.height}px`,
+					}}
+				/>
+			</div>
 		</div>
 	);
 };
