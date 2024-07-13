@@ -3,6 +3,7 @@ import type { Configuration } from "../types";
 import { BackdropProps } from "./backdrop.tsx";
 import { Controls } from "./controls.tsx";
 import { View } from "./view.tsx";
+import "./index.css";
 
 interface ViewerProps {
 	src: string;
