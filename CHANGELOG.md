@@ -1,5 +1,11 @@
 # react-image-viewer-x
 
+## 0.5.1
+
+### Patch Changes
+
+- fixed issues with canvas offset
+
 ## 0.4.3
 
 ### Patch Changes
