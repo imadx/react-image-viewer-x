@@ -28,4 +28,4 @@ const App = () => {
 
 ## Screenshots
 
-![Preview Image](./screenshot.png)
+![Preview Image](https://github.com/imadx/react-image-viewer-x/blob/main/screenshot.png?raw=true)
