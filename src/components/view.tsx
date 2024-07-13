@@ -194,6 +194,9 @@ export const View: FC<ViewProps> = ({ src, state }) => {
 			const { width, height } = imageDimensionsRef.current;
 			const { x, y, scale } = animationRef.current;
 
+			const containerWidth = containerDimensionsRef.current.width;
+			const containerHeight = containerDimensionsRef.current.height;
+
 			const scaledWidth = width * scale;
 			const scaledHeight = height * scale;
 
@@ -205,31 +208,39 @@ export const View: FC<ViewProps> = ({ src, state }) => {
 			let offsetXToMove = 0;
 			let offsetYToMove = 0;
 
-			if (imageLeft < 0 && imageRight < containerDimensionsRef.current.width) {
-				offsetXToMove = containerDimensionsRef.current.width - imageRight;
+			if (imageLeft < 0 && imageRight < containerWidth) {
+				offsetXToMove = containerWidth - imageRight;
 			}
 
-			if (imageRight > containerDimensionsRef.current.width && imageLeft > 0) {
+			if (imageRight > containerWidth && imageLeft > 0) {
 				offsetXToMove = -imageLeft;
 			}
 
-			if (imageTop < 0 && imageBottom < containerDimensionsRef.current.height) {
-				offsetYToMove = containerDimensionsRef.current.height - imageBottom;
+			if (imageTop < 0 && imageBottom < containerHeight) {
+				offsetYToMove = containerHeight - imageBottom;
 			}
 
-			if (imageBottom > containerDimensionsRef.current.height && imageTop > 0) {
+			if (imageBottom > containerHeight && imageTop > 0) {
 				offsetYToMove = -imageTop;
 			}
 
 			let finalOffsetX = x + offsetXToMove;
 			let finalOffsetY = y + offsetYToMove;
 
-			if (scale <= 1 && canvasRef.current) {
-				if (Math.abs(offsetXToMove) > 0) {
+			if (canvasRef.current) {
+				if (
+					scale <= 1 &&
+					(Math.abs(offsetXToMove) > 0 || Math.abs(offsetYToMove) > 0)
+				) {
+					finalOffsetX = canvasRef.current.width / 2;
+					finalOffsetY = canvasRef.current.height / 2;
+				}
+
+				if (Math.abs(offsetXToMove) > 0 && scaledWidth < containerWidth) {
 					finalOffsetX = canvasRef.current.width / 2;
 				}
 
-				if (Math.abs(offsetYToMove) > 0) {
+				if (Math.abs(offsetYToMove) > 0 && scaledHeight < containerHeight) {
 					finalOffsetY = canvasRef.current.height / 2;
 				}
 			}

@@ -1,5 +1,11 @@
 # react-image-viewer-x
 
+## 0.5.2
+
+### Patch Changes
+
+- updated behaviour on out of bound drags and adds performance improvements
+
 ## 0.5.1
 
 ### Patch Changes
