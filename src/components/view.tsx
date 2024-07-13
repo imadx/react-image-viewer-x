@@ -25,6 +25,7 @@ export const View: FC<ViewProps> = ({ src, alt, state }) => {
 	});
 	const imageDimensionsRef = useRef<Dimensions>({ width: 800, height: 450 });
 
+	const scrollPositionRef = useRef({ x: 0, y: 0 });
 	const aspectRatioRef = useRef(16 / 9);
 	const [imageDimensions, setImageDimensions] = useState<Dimensions>({
 		width: 800,
@@ -37,6 +38,25 @@ export const View: FC<ViewProps> = ({ src, alt, state }) => {
 		containerDimensionsRef.current = {
 			width: containerRef.current.offsetWidth,
 			height: containerRef.current.offsetHeight,
+		};
+	}, []);
+
+	useEffect(() => {
+		const handleScroll = () => {
+			if (!containerRef.current) return;
+
+			scrollPositionRef.current = {
+				x: containerRef.current.scrollLeft,
+				y: containerRef.current.scrollTop,
+			};
+		};
+
+		if (!containerRef.current) return;
+		containerRef.current.addEventListener("scroll", handleScroll);
+
+		return () => {
+			if (!containerRef.current) return;
+			containerRef.current.removeEventListener("scroll", handleScroll);
 		};
 	}, []);
 
@@ -54,7 +74,6 @@ export const View: FC<ViewProps> = ({ src, alt, state }) => {
 					imageDimensionsRef.current,
 				);
 				setImageDimensions(dimensions);
-				console.log("=>(view.tsx:57) dimensions", dimensions);
 			});
 	}, [src]);
 
