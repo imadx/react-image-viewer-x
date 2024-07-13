@@ -1,7 +1,7 @@
 {
 	"name": "react-image-viewer-x",
 	"private": false,
-	"version": "0.1.10",
+	"version": "0.1.11",
 	"author": "Ishan Madhusanka (imadx)",
 	"main": "./dist/index.es.js",
 	"module": "./dist/index.umd.js",
@@ -42,12 +42,18 @@
 		"vite": "^5.3.1"
 	},
 	"browserslist": {
-		"production": [">0.2%", "not dead", "not op_mini all"],
+		"production": [
+			">0.2%",
+			"not dead",
+			"not op_mini all"
+		],
 		"development": [
 			"last 1 chrome version",
 			"last 1 firefox version",
 			"last 1 safari version"
 		]
 	},
-	"files": ["dist/"]
+	"files": [
+		"dist/"
+	]
 }
