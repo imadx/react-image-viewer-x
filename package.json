@@ -2,7 +2,15 @@
 	"name": "react-image-viewer-x",
 	"private": false,
 	"version": "0.5.4",
-	"author": "Ishan Madhusanka (imadx)",
+	"description": "A lightweight, versatile image viewer component for React applications, supporting features like zoom, pan",
+	"keywords": ["react", "image viewer", "zoom", "pan"],
+	"author": "Ishan Madhusanka (imadx) <ahtimadhusanka@gmail.com> (https://imadhusanka.me)",
+	"license": "MIT",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/imadx/react-image-viewer-x.git"
+	},
+	"homepage": "https://github.com/imadx/react-image-viewer-x#readme",
 	"main": "./dist/index.es.js",
 	"module": "./dist/index.umd.js",
 	"exports": {
@@ -43,18 +51,12 @@
 		"vite": "^5.3.1"
 	},
 	"browserslist": {
-		"production": [
-			">0.2%",
-			"not dead",
-			"not op_mini all"
-		],
+		"production": [">0.2%", "not dead", "not op_mini all"],
 		"development": [
 			"last 1 chrome version",
 			"last 1 firefox version",
 			"last 1 safari version"
 		]
 	},
-	"files": [
-		"dist/"
-	]
+	"files": ["dist/"]
 }
