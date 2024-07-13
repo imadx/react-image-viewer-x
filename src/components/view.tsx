@@ -168,6 +168,57 @@ export const View: FC<ViewProps> = ({ src, state }) => {
 		});
 	}, [state, animateFrames]);
 
+	useEffect(() => {
+		let initialX = 0;
+		let initialY = 0;
+
+		let initialAnimationX = 0;
+		let initialAnimationY = 0;
+
+		// move image center with mouse drag
+		const onMouseMove = (e: MouseEvent) => {
+			if (!containerRef.current) return;
+
+			const { clientX, clientY } = e;
+			const { left, top } = containerRef.current.getBoundingClientRect();
+
+			const x = clientX - left;
+			const y = clientY - top;
+
+			animationRef.current.x = initialAnimationX + x - initialX;
+			animationRef.current.y = initialAnimationY + y - initialY;
+			drawCanvasImageWithOffsets();
+		};
+
+		const onMouseUp = () => {
+			document.removeEventListener("mousemove", onMouseMove);
+			document.removeEventListener("mouseup", onMouseUp);
+		};
+
+		const onMouseDown = (e: MouseEvent) => {
+			if (!containerRef.current) return;
+			const { left, top } = containerRef.current.getBoundingClientRect();
+
+			initialX = e.clientX - left;
+			initialY = e.clientY - top;
+
+			initialAnimationX = animationRef.current.x;
+			initialAnimationY = animationRef.current.y;
+
+			document.addEventListener("mousemove", onMouseMove);
+			document.addEventListener("mouseup", onMouseUp);
+		};
+
+		if (!containerRef.current) return;
+		containerRef.current.addEventListener("mousedown", onMouseDown);
+		containerRef.current.addEventListener("mouseup", onMouseUp);
+
+		return () => {
+			containerRef.current?.removeEventListener("mousedown", onMouseDown);
+			containerRef.current?.removeEventListener("mouseup", onMouseUp);
+		};
+	}, []);
+
 	return (
 		<div ref={containerRef} className={classes.container}>
 			<canvas ref={canvasRef} className={classes.image} />

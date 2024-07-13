@@ -1,5 +1,11 @@
 # react-image-viewer-x
 
+## 0.4.1
+
+### Patch Changes
+
+- f3e673c: added basic dragging capabilities
+
 ## 0.4.0
 
 ### Minor Changes
