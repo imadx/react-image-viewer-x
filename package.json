@@ -15,7 +15,6 @@
 	"scripts": {
 		"dev": "vite",
 		"build": "tsc -b && vite build",
-		"build-tailwind": "NODE_ENV=production npx tailwindcss -i ./src/index.css -o ./dist/index.css --postcss --minify",
 		"lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
 		"preview": "vite preview"
 	},
@@ -37,7 +36,6 @@
 		"eslint-plugin-react-refresh": "^0.4.7",
 		"lightningcss": "^1.25.1",
 		"postcss": "^8.4.39",
-		"tailwindcss": "^3.4.4",
 		"typescript": "^5.2.2",
 		"vite": "^5.3.1"
 	},
