@@ -28,7 +28,6 @@ const defaultConfiguration: Configuration = {
 
 export const ImageViewer: FC<ViewerProps> = ({
 	src,
-	alt,
 	configuration: userConfiguration,
 }) => {
 	const configuration = getMergedConfiguration(
@@ -63,7 +62,7 @@ export const ImageViewer: FC<ViewerProps> = ({
 				onZoomOut={handleZoomOut}
 				configuration={configuration.controllers}
 			/>
-			<View src={src} alt={alt} state={state} />
+			<View src={src} state={state} />
 		</div>
 	);
 };
