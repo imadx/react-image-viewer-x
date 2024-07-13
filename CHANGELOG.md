@@ -1,5 +1,11 @@
 # react-image-viewer-x
 
+## 0.4.3
+
+### Patch Changes
+
+- cc172a3: fixed performance issues when dragging the image
+
 ## 0.4.2
 
 ### Patch Changes
