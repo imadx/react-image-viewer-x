@@ -1,5 +1,11 @@
 # react-image-viewer-x
 
+## 0.5.3
+
+### Patch Changes
+
+- updated viewer to resize on window resize events
+
 ## 0.5.2
 
 ### Patch Changes

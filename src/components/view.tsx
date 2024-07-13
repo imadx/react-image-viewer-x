@@ -56,16 +56,28 @@ export const View: FC<ViewProps> = ({ src, state }) => {
 	}, [src]);
 
 	useEffect(() => {
-		if (!containerRef.current) return;
+		const updateContainerDimensions = () => {
+			if (!containerRef.current) return;
 
-		containerDimensionsRef.current = {
-			width: containerRef.current.offsetWidth,
-			height: containerRef.current.offsetHeight,
+			containerDimensionsRef.current = {
+				width: containerRef.current.offsetWidth,
+				height: containerRef.current.offsetHeight,
+			};
+
+			if (!canvasRef.current) return;
+			canvasRef.current.width = containerDimensionsRef.current.width;
+			canvasRef.current.height = containerDimensionsRef.current.height;
+
+			drawCanvasImageWithOffsets();
 		};
 
-		if (!canvasRef.current) return;
-		canvasRef.current.width = containerDimensionsRef.current.width;
-		canvasRef.current.height = containerDimensionsRef.current.height;
+		updateContainerDimensions();
+
+		window.addEventListener("resize", updateContainerDimensions);
+
+		return () => {
+			window.removeEventListener("resize", updateContainerDimensions);
+		};
 	}, []);
 
 	const drawCanvasImageWithOffsets = useCallback(() => {
