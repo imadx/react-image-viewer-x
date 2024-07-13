@@ -1,5 +1,11 @@
 # react-image-viewer-x
 
+## 0.4.2
+
+### Patch Changes
+
+- added capability to bounce back when dragged out of bounds
+
 ## 0.4.1
 
 ### Patch Changes

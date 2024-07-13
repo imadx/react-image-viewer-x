@@ -82,7 +82,6 @@ export const View: FC<ViewProps> = ({ src, state }) => {
 		const { width, height } = imageDimensionsRef.current;
 
 		if (!animationRef.current) return;
-		console.log("=>(view.tsx:83) animationRef", animationRef);
 
 		const scale = animationRef.current.scale;
 		const scaledWidth = width * scale;
@@ -111,12 +110,10 @@ export const View: FC<ViewProps> = ({ src, state }) => {
 					imageOriginalDimensionsRef.current.width /
 					imageOriginalDimensionsRef.current.height;
 
-				const dimensions = getImageDimensionsToFit(
+				imageDimensionsRef.current = getImageDimensionsToFit(
 					containerDimensionsRef.current,
 					imageOriginalDimensionsRef.current,
 				);
-				console.log("=>(view.tsx:55) dimensions", dimensions);
-				imageDimensionsRef.current = dimensions;
 
 				if (!canvasRef.current) return;
 
@@ -146,8 +143,6 @@ export const View: FC<ViewProps> = ({ src, state }) => {
 	);
 
 	useEffect(() => {
-		if (!state) return;
-
 		if (rAFRef.current) {
 			cancelAnimationFrame(rAFRef.current);
 		}
@@ -159,8 +154,8 @@ export const View: FC<ViewProps> = ({ src, state }) => {
 		animeRef.current = anime({
 			targets: animationRef.current,
 			scale: state.scale,
-			duration: 500,
-			easing: "easeOutExpo",
+			duration: 700,
+			easing: "easeInOutExpo",
 			autoplay: true,
 			update: (animation) => {
 				animateFrames(animation);
@@ -187,12 +182,73 @@ export const View: FC<ViewProps> = ({ src, state }) => {
 
 			animationRef.current.x = initialAnimationX + x - initialX;
 			animationRef.current.y = initialAnimationY + y - initialY;
-			drawCanvasImageWithOffsets();
+
+			if (rAFRef.current) cancelAnimationFrame(rAFRef.current);
+
+			rAFRef.current = requestAnimationFrame(() => {
+				drawCanvasImageWithOffsets();
+			});
 		};
 
 		const onMouseUp = () => {
 			document.removeEventListener("mousemove", onMouseMove);
 			document.removeEventListener("mouseup", onMouseUp);
+
+			// calculate offset and re-align the image to the border
+			const { width, height } = imageDimensionsRef.current;
+			const { x, y, scale } = animationRef.current;
+
+			const scaledWidth = width * scale;
+			const scaledHeight = height * scale;
+
+			const imageLeft = x - scaledWidth / 2;
+			const imageRight = x + scaledWidth / 2;
+			const imageTop = y - scaledHeight / 2;
+			const imageBottom = y + scaledHeight / 2;
+
+			let offsetXToMove = 0;
+			let offsetYToMove = 0;
+
+			if (imageLeft < 0 && imageRight < containerDimensionsRef.current.width) {
+				offsetXToMove = containerDimensionsRef.current.width - imageRight;
+			}
+
+			if (imageRight > containerDimensionsRef.current.width && imageLeft > 0) {
+				offsetXToMove = -imageLeft;
+			}
+
+			if (imageTop < 0 && imageBottom < containerDimensionsRef.current.height) {
+				offsetYToMove = containerDimensionsRef.current.height - imageBottom;
+			}
+
+			if (imageBottom > containerDimensionsRef.current.height && imageTop > 0) {
+				offsetYToMove = -imageTop;
+			}
+
+			let finalOffsetX = x + offsetXToMove;
+			let finalOffsetY = y + offsetYToMove;
+
+			if (scale <= 1 && canvasRef.current) {
+				if (Math.abs(offsetXToMove) > 0) {
+					finalOffsetX = canvasRef.current.width / 2;
+				}
+
+				if (Math.abs(offsetYToMove) > 0) {
+					finalOffsetY = canvasRef.current.height / 2;
+				}
+			}
+
+			animeRef.current = anime({
+				targets: animationRef.current,
+				x: finalOffsetX,
+				y: finalOffsetY,
+				duration: 700,
+				easing: "easeOutElastic",
+				autoplay: true,
+				update: (animation) => {
+					animateFrames(animation);
+				},
+			});
 		};
 
 		const onMouseDown = (e: MouseEvent) => {
@@ -217,7 +273,7 @@ export const View: FC<ViewProps> = ({ src, state }) => {
 			containerRef.current?.removeEventListener("mousedown", onMouseDown);
 			containerRef.current?.removeEventListener("mouseup", onMouseUp);
 		};
-	}, []);
+	}, [animateFrames, drawCanvasImageWithOffsets]);
 
 	return (
 		<div ref={containerRef} className={classes.container}>
