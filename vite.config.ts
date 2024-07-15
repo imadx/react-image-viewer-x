@@ -21,7 +21,6 @@ export default defineConfig({
 				globals: {
 					react: "React",
 				},
-				intro: 'import "./style.css"',
 			},
 		},
 	},

@@ -1,5 +1,11 @@
 # react-image-viewer-x
 
+## 0.7.1
+
+### Patch Changes
+
+- fixes issue with invalid style import
+
 ## 0.7.0
 
 ### Minor Changes

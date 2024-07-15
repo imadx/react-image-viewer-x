@@ -1,4 +1,3 @@
-import "./style.css";
 import Ae, { useRef as de, useDebugValue as wt, createElement as ao, useContext as io, useEffect as Ge, useCallback as St, useState as so } from "react";
 var Dr = { exports: {} }, Ze = {};
 /**
@@ -2839,7 +2838,7 @@ const ei = je.div`
   options: {
     hasNoBackdrop: !0
   }
-}, ui = ({
+}, ci = ({
   src: e,
   configuration: r
 }) => {
@@ -2878,5 +2877,5 @@ const ei = je.div`
   }
 });
 export {
-  ui as ImageViewer
+  ci as ImageViewer
 };
