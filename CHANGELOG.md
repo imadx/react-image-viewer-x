@@ -1,5 +1,11 @@
 # react-image-viewer-x
 
+## 0.7.2
+
+### Patch Changes
+
+- fixed type definitions
+
 ## 0.7.1
 
 ### Patch Changes
