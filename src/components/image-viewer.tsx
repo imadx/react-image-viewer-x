@@ -2,7 +2,7 @@ import { type FC, useState } from "react";
 import type { Configuration } from "../types";
 import { BackdropProps } from "./backdrop.tsx";
 import { Controls } from "./controls.tsx";
-import classes from "./image-viewer.module.scss";
+import { StyledImageViewerContainer } from "./image-viewer.styles.ts";
 import { View } from "./view.tsx";
 
 interface ViewerProps {
@@ -55,7 +55,7 @@ export const ImageViewer: FC<ViewerProps> = ({
 	const state = { scale };
 
 	return (
-		<div className={classes.imageViewerContainer}>
+		<StyledImageViewerContainer>
 			<BackdropProps src={src} />
 			<Controls
 				onZoomIn={handleZoomIn}
@@ -63,7 +63,7 @@ export const ImageViewer: FC<ViewerProps> = ({
 				configuration={configuration.controllers}
 			/>
 			<View src={src} state={state} />
-		</div>
+		</StyledImageViewerContainer>
 	);
 };
 

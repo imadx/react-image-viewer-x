@@ -1,4 +1,6 @@
-.controlsContainer {
+import styled from "styled-components";
+
+export const StyledControlsContainer = styled.div`
   display: flex;
   flex-direction: column;
   position: absolute;
@@ -10,4 +12,4 @@
   border-radius: 0.5rem;
   backdrop-filter: blur(1rem);
   z-index: 10;
-}
+`;

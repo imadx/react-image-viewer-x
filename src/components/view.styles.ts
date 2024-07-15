@@ -1,4 +1,6 @@
-.container {
+import styled from "styled-components";
+
+export const StyledDivContainer = styled.div`
   position: relative;
   width: 100%;
   height: 100%;
@@ -13,9 +15,9 @@
     -ms-overflow-style: none;
     scrollbar-width: none;
   }
-}
+`;
 
-.image {
+export const StyledCanvas = styled.canvas`
   position: absolute;
   top: 0;
   left: 0;
@@ -24,4 +26,4 @@
   height: 100%;
   object-fit: contain;
   cursor: move;
-}
+`;

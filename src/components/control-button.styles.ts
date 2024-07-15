@@ -1,4 +1,6 @@
-.button {
+import styled from "styled-components";
+
+export const StyledButton = styled.button`
   background: none;
   border: none;
   color: white;
@@ -10,4 +12,4 @@
   &:hover {
     opacity: 1;
   }
-}
+`;

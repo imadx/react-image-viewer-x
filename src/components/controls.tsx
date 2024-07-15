@@ -1,7 +1,7 @@
 import type { FC } from "react";
 import type { Configuration } from "../types";
 import { ControlButton } from "./control-button.tsx";
-import classes from "./controls.module.scss";
+import { StyledControlsContainer } from "./controls.styles.ts";
 import { ZoomInIcon } from "./icons/zoom-in.tsx";
 import { ZoomOutIcon } from "./icons/zoom-out.tsx";
 
@@ -20,13 +20,13 @@ export const Controls: FC<ControlsProps> = ({
 	const zoomOutIconNode = configuration.zoomOutIcon ?? <ZoomOutIcon />;
 
 	return (
-		<div className={classes.controlsContainer}>
+		<StyledControlsContainer>
 			{configuration.hasZoomIn && (
 				<ControlButton onClick={onZoomIn}>{zoomIconNode}</ControlButton>
 			)}
 			{configuration.hasZoomOut && (
 				<ControlButton onClick={onZoomOut}>{zoomOutIconNode}</ControlButton>
 			)}
-		</div>
+		</StyledControlsContainer>
 	);
 };

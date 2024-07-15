@@ -1,4 +1,6 @@
-.backdrop {
+import styled from "styled-components";
+
+export const StyledBackdrop = styled.div`
   display: block;
   position: absolute;
   top: 0;
@@ -8,4 +10,4 @@
   background-color: #4B5563;
   filter: blur(1rem);
   transform: scale(1.25);
-}
+`;

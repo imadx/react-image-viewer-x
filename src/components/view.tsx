@@ -1,6 +1,6 @@
 import anime, { type AnimeInstance } from "animejs";
 import { type FC, useCallback, useEffect, useRef } from "react";
-import classes from "./view.module.scss";
+import { StyledCanvas, StyledDivContainer } from "./view.styles.ts";
 
 interface State {
 	scale: number;
@@ -301,9 +301,9 @@ export const View: FC<ViewProps> = ({ src, state }) => {
 	}, [animateFrames, drawCanvasImageWithOffsets]);
 
 	return (
-		<div ref={containerRef} className={classes.container}>
-			<canvas ref={canvasRef} className={classes.image} />
-		</div>
+		<StyledDivContainer ref={containerRef}>
+			<StyledCanvas ref={canvasRef} />
+		</StyledDivContainer>
 	);
 };
 

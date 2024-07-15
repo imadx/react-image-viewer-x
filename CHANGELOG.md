@@ -1,5 +1,11 @@
 # react-image-viewer-x
 
+## 0.6.0
+
+### Minor Changes
+
+- use inline styles with styled components
+
 ## 0.5.3
 
 ### Patch Changes

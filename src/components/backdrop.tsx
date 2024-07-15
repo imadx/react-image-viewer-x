@@ -1,5 +1,5 @@
 import type { FC } from "react";
-import classes from "./backdrop.module.scss";
+import { StyledBackdrop } from "./backdrop.styles.ts";
 
 interface BackdropProps {
 	src: string;
@@ -7,8 +7,7 @@ interface BackdropProps {
 
 export const BackdropProps: FC<BackdropProps> = ({ src }) => {
 	return (
-		<div
-			className={classes.backdrop}
+		<StyledBackdrop
 			style={{
 				backgroundImage: `url(${src})`,
 				backgroundSize: "cover",
