@@ -26,7 +26,7 @@ const defaultConfiguration: Configuration = {
 		hasZoomOut: true,
 	},
 	options: {
-		hasNoBackdrop: true,
+		hasNoBackdrop: false,
 	},
 };
 

@@ -8,6 +8,7 @@ interface BackdropProps {
 export const Backdrop: FC<BackdropProps> = ({ src }) => {
 	return (
 		<StyledBackdrop
+			data-rivx-backdrop
 			style={{
 				backgroundImage: `url(${src})`,
 				backgroundSize: "cover",

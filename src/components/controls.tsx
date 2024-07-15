@@ -20,7 +20,7 @@ export const Controls: FC<ControlsProps> = ({
 	const zoomOutIconNode = configuration.zoomOutIcon ?? <ZoomOutIcon />;
 
 	return (
-		<StyledControlsContainer>
+		<StyledControlsContainer data-rivx-controls>
 			{configuration.hasZoomIn && (
 				<ControlButton onClick={onZoomIn}>{zoomIconNode}</ControlButton>
 			)}

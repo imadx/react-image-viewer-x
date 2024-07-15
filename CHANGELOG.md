@@ -1,5 +1,12 @@
 # react-image-viewer-x
 
+## 0.7.8
+
+### Patch Changes
+
+- fix default value for hasNoBackground
+- add data identifiers for dom elemeents
+
 ## 0.7.6
 
 ### Patch Changes

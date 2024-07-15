@@ -305,7 +305,7 @@ export const View: FC<ViewProps> = ({ src, state }) => {
 	}, [animateFrames, drawCanvasImageWithOffsets]);
 
 	return (
-		<StyledDivContainer ref={containerRef}>
+		<StyledDivContainer ref={containerRef} data-rivx-view>
 			<StyledCanvas ref={canvasRef} />
 		</StyledDivContainer>
 	);
