@@ -1,5 +1,11 @@
 # react-image-viewer-x
 
+## 0.7.4
+
+### Patch Changes
+
+- fixed contrast between background, image and icons
+
 ## 0.7.2
 
 ### Patch Changes

@@ -1715,7 +1715,7 @@ const ya = je.div`
   bottom: 0;
   right: 0;
   background-color: #4B5563;
-  filter: blur(1rem);
+  filter: blur(1rem) brightness(0.5) grayscale(0.3);
   transform: scale(1.25);
 `, ba = ({ src: e }) => /* @__PURE__ */ $.jsx(
   ya,
@@ -1751,6 +1751,7 @@ const ya = je.div`
   padding: 0.5rem;
   border: solid thin rgb(75 85 99 / 0.3);
   border-radius: 0.5rem;
+	background-color: rgb(75 85 99 / 0.3);
   backdrop-filter: blur(1rem);
   z-index: 10;
 `, xa = () => /* @__PURE__ */ $.jsxs(

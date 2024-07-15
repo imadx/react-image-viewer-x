@@ -9,6 +9,7 @@ export const StyledControlsContainer = styled.div`
   margin: 1rem;
   padding: 0.5rem;
   border: solid thin rgb(75 85 99 / 0.3);
+	background-color: rgb(75 85 99 / 0.3);
   border-radius: 0.5rem;
   backdrop-filter: blur(1rem);
   z-index: 10;
