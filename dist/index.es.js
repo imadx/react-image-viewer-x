@@ -1750,8 +1750,8 @@ const ya = je.div`
   margin: 1rem;
   padding: 0.5rem;
   border: solid thin rgb(75 85 99 / 0.3);
-  border-radius: 0.5rem;
 	background-color: rgb(75 85 99 / 0.3);
+  border-radius: 0.5rem;
   backdrop-filter: blur(1rem);
   z-index: 10;
 `, xa = () => /* @__PURE__ */ $.jsxs(
@@ -2852,7 +2852,7 @@ const ei = je.div`
     n <= t.viewer.minScale || o((a) => a - t.viewer.scaleStep);
   }, u = { scale: n };
   return /* @__PURE__ */ $.jsxs(Ra, { children: [
-    /* @__PURE__ */ $.jsx(ba, { src: e }),
+    !t.options.hasNoBackdrop && /* @__PURE__ */ $.jsx(ba, { src: e }),
     /* @__PURE__ */ $.jsx(
       ka,
       {

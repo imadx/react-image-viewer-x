@@ -3,5 +3,5 @@ import { FC } from 'react';
 interface BackdropProps {
     src: string;
 }
-export declare const BackdropProps: FC<BackdropProps>;
+export declare const Backdrop: FC<BackdropProps>;
 export {};

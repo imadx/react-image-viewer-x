@@ -5,7 +5,7 @@ interface BackdropProps {
 	src: string;
 }
 
-export const BackdropProps: FC<BackdropProps> = ({ src }) => {
+export const Backdrop: FC<BackdropProps> = ({ src }) => {
 	return (
 		<StyledBackdrop
 			style={{

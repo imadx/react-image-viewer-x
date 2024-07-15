@@ -1,5 +1,11 @@
 # react-image-viewer-x
 
+## 0.7.6
+
+### Patch Changes
+
+- fixes hasNoBackdrop option
+
 ## 0.7.4
 
 ### Patch Changes

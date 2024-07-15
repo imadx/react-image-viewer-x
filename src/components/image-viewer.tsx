@@ -1,14 +1,18 @@
 import { type FC, useState } from "react";
 import type { Configuration } from "../types";
-import { BackdropProps } from "./backdrop.tsx";
+import { Backdrop } from "./backdrop.tsx";
 import { Controls } from "./controls.tsx";
 import { StyledImageViewerContainer } from "./image-viewer.styles.ts";
 import { View } from "./view.tsx";
 
+type DeepPartial<T> = {
+	[P in keyof T]?: DeepPartial<T[P]>;
+};
+
 interface ViewerProps {
 	src: string;
 	alt: string;
-	configuration?: Partial<Configuration>;
+	configuration?: DeepPartial<Configuration>;
 }
 
 const defaultConfiguration: Configuration = {
@@ -56,7 +60,7 @@ export const ImageViewer: FC<ViewerProps> = ({
 
 	return (
 		<StyledImageViewerContainer>
-			<BackdropProps src={src} />
+			{!configuration.options.hasNoBackdrop && <Backdrop src={src} />}
 			<Controls
 				onZoomIn={handleZoomIn}
 				onZoomOut={handleZoomOut}
@@ -69,7 +73,7 @@ export const ImageViewer: FC<ViewerProps> = ({
 
 const getMergedConfiguration = (
 	defaultConfiguration: Configuration,
-	userConfiguration: Partial<Configuration> | undefined,
+	userConfiguration: DeepPartial<Configuration> | undefined,
 ): Configuration => {
 	return {
 		viewer: {
@@ -78,7 +82,9 @@ const getMergedConfiguration = (
 		},
 		controllers: {
 			...defaultConfiguration.controllers,
-			...userConfiguration?.controllers,
+			...(userConfiguration?.controllers as Partial<
+				Configuration["controllers"]
+			>),
 		},
 		options: {
 			...defaultConfiguration.options,
