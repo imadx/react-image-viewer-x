@@ -1,7 +1,7 @@
 {
 	"name": "react-image-viewer-x",
 	"private": false,
-	"version": "0.7.8",
+	"version": "0.7.9",
 	"description": "A lightweight, versatile image viewer component for React applications, supporting features like zoom, pan",
 	"keywords": [
 		"react",
