@@ -236,6 +236,10 @@ export const View: FC<ViewProps> = ({ src, state }) => {
 				offsetYToMove = -imageTop;
 			}
 
+			if (!offsetXToMove && !offsetYToMove) {
+				return;
+			}
+
 			let finalOffsetX = x + offsetXToMove;
 			let finalOffsetY = y + offsetYToMove;
 

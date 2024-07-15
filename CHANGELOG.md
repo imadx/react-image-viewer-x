@@ -1,5 +1,11 @@
 # react-image-viewer-x
 
+## 0.7.0
+
+### Minor Changes
+
+- fixed issue with playing empty animation when no transition is required
+
 ## 0.6.0
 
 ### Minor Changes
