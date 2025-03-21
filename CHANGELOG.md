@@ -1,5 +1,14 @@
 # react-image-viewer-x
 
+## 2.0.0
+
+### Major Changes
+
+- Added support for React 19
+
+  This is a major release because it adds support for React 19.
+  This is a breaking change because it requires React 19 to be installed.
+
 ## 0.7.8
 
 ### Patch Changes

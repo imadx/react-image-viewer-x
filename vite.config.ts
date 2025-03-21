@@ -1,7 +1,9 @@
 import path from "node:path";
 import react from "@vitejs/plugin-react";
-import { defineConfig } from "vite";
-import dts from "vite-plugin-dts";
+import {defineConfig} from "vite";
+import dts from "vite-plugin-dts"; // https://vitejs.dev/config/
+
+const ReactCompilerConfig = {};
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -26,7 +28,11 @@ export default defineConfig({
 		},
 	},
 	plugins: [
-		react(),
+		react({
+			babel: {
+				plugins: [["babel-plugin-react-compiler", ReactCompilerConfig]],
+			},
+		}),
 		dts({
 			insertTypesEntry: true,
 			tsconfigPath: path.resolve(__dirname, "tsconfig.app.json"),
