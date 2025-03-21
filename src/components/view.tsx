@@ -1,6 +1,6 @@
-import anime, { type AnimeInstance } from "animejs";
-import { type FC, useCallback, useEffect, useRef } from "react";
-import { StyledCanvas, StyledDivContainer } from "./view.styles.ts";
+import anime, {type AnimeInstance} from "animejs";
+import {type FC, useCallback, useEffect, useRef} from "react";
+import {StyledCanvas, StyledDivContainer} from "./view.styles.ts";
 
 interface State {
 	scale: number;
@@ -166,8 +166,8 @@ export const View: FC<ViewProps> = ({ src, state }) => {
 		animeRef.current = anime({
 			targets: animationRef.current,
 			scale: state.scale,
-			duration: 700,
-			easing: "easeInOutExpo",
+			duration: 300,
+			easing: "easeOutExpo",
 			autoplay: true,
 			update: (animation) => {
 				animateFrames(animation);
@@ -271,8 +271,8 @@ export const View: FC<ViewProps> = ({ src, state }) => {
 				targets: animationRef.current,
 				x: finalOffsetX,
 				y: finalOffsetY,
-				duration: 700,
-				easing: "easeOutElastic",
+				duration: 500,
+				easing: "easeOutExpo",
 				autoplay: true,
 				update: (animation) => {
 					animateFrames(animation);
